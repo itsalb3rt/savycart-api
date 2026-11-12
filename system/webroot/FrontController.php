@@ -11,15 +11,14 @@ require_once __ROOT__DIR__.'vendor/autoload.php';
  **/
 
 /**
- * Verifica la version del servidor, las versiones debajo de la 7.1.3 no soportan
- * ciertas caracteristicas como la palabra recervada const en propiedades de clases.
+ * Verifica la version del servidor, se requiere PHP 8.3 o superior.
  **/
-if(version_compare(PHP_VERSION, '7.2', '>=') == false ){
+if(version_compare(PHP_VERSION, '8.3', '>=') == false ){
     echo '<meta charset="UTF-8">';
     echo '<title>Versión | Error</title>';
     echo '<div style="margin: auto;text-align: center;font-family: sans-serif;margin-top: 70px;">';
     echo '<h1>Versión no compatible</h1>';
-    echo '<h3>La versión de PHP que está utilizando no es compatible con LIGNE, favor utilizar una versión igual o superior a 7.1.3</h3>';
+    echo '<h3>La versión de PHP que está utilizando no es compatible con LIGNE, favor utilizar una versión igual o superior a 8.3</h3>';
     echo '</div>';
     die();
 }
@@ -48,9 +47,10 @@ require_once(__ROOT__DIR__ . 'system/Assets.php');
 
 use Ligne\ErrorHandler;
 // Load the env file
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "../../../");
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__ . "../../../");
 $dotenv->load();
 
+define('ENVIRONMENT', $_ENV["API_ENVIRONMENT"]);
 new ErrorHandler($_ENV["API_ENVIRONMENT"]);
 
 $dispatch = new Dispatcher();

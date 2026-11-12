@@ -13,7 +13,7 @@ class AnalysisController extends Controller
 {
     public function __construct()
     {
-        if(ENVIROMENT == 'dev'){
+        if(ENVIRONMENT == 'dev'){
             $origin = "http://localhost:8080";
         }else{
             $origin = "https://gibucket.a2hosted.com";

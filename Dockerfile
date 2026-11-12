@@ -1,22 +1,27 @@
-FROM php:7.4-apache
+FROM php:8.3-apache
+
 COPY . /var/www/html/sheiley-shop-api
 
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y git \
     zip \
-    unzip
-#Install PHP Extensions
-RUN docker-php-ext-install pdo_mysql
+    unzip \
+    libsqlite3-dev \
+    libsodium-dev && \
+    docker-php-ext-install pdo_mysql sodium && \
+    docker-php-ext-enable pdo_mysql sodium
 
-#Install Composer
-RUN curl https://getcomposer.org/download/1.10.26/composer.phar --output composer.phar
-RUN chmod a+x composer.phar
-RUN mv composer.phar /usr/local/bin/composer
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN a2enmod rewrite
+
+# Set correct DocumentRoot
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/sheiley-shop-api|' /etc/apache2/sites-enabled/000-default.conf
+RUN sed -i 's|<Directory /var/www/>|<Directory /var/www/html/sheiley-shop-api>|' /etc/apache2/conf-enabled/docker-php.conf
 
 EXPOSE 80
 
 WORKDIR /var/www/html/sheiley-shop-api
-RUN composer install
+RUN composer install --no-dev --optimize-autoloader

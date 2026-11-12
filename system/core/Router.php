@@ -106,7 +106,7 @@ class Router
      */
     static public function showNonexistentController(string $controller_name = null): void
     {
-        $erroHandler = new ErrorHandler(ENVIROMENT);
+        $erroHandler = new ErrorHandler(ENVIRONMENT);
         $erroHandler->showDevMessages("El controlador no existe",
             "Debe verificar la ruta que ha insertado, en realidad tiene un controlador con el nombre <span class='special_name_element'>$controller_name</span>", $_SERVER['REQUEST_URI']);
     }
@@ -116,7 +116,7 @@ class Router
      */
     static public function showInvalidAction(): void
     {
-        $erroHandler = new ErrorHandler(ENVIROMENT);
+        $erroHandler = new ErrorHandler(ENVIRONMENT);
         $erroHandler->showDevMessages("Acción  inexistente para la url",
             "Puede que este intentado realizar una acción que no exista, por ejemplo, para un controlador foo que tenga una acción bar la ruta seria http://dominio/foo/bar",
             $_SERVER['REQUEST_URI']);
@@ -128,7 +128,7 @@ class Router
      */
     static public function showActionNoExists(string $method): void
     {
-        $erroHandler = new ErrorHandler(ENVIROMENT);
+        $erroHandler = new ErrorHandler(ENVIRONMENT);
         $erroHandler->showDevMessages("La acción ' " . $method . " ' no existe",
             "La acción solicitada al parecer no existe en el controlador");
     }

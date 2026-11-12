@@ -56,7 +56,7 @@ class Controller
      */
     function render(string $filename,string $title = null,bool $external_view = false,string $other_layout = null):void
     {
-        extract($this->vars,EXTR_OVERWRITE);
+        extract($this->vars, EXTR_SKIP);
         ob_start();
         if($external_view){
             $view_file = __ROOT__DIR__ . "src/views/" . $filename . '.php';
@@ -116,7 +116,7 @@ class Controller
      * @param $filename
      */
     private function viewNonexists(string $filename):void{
-        $errorHandler = new ErrorHandler(ENVIROMENT);
+        $errorHandler = new ErrorHandler(ENVIRONMENT);
         $errorHandler->showDevMessages("Error archivo vista",
             "La vista <span class='special_name_element'>' $filename '</span> no fue encontrada");
     }
@@ -125,7 +125,7 @@ class Controller
      * que el layout que ha elegido no es valido en caso se no serlo
     **/
     private function defaultLayoutNotFound():void {
-        $errorHandler = new ErrorHandler(ENVIROMENT);
+        $errorHandler = new ErrorHandler(ENVIRONMENT);
         $errorHandler->showDevMessages("Problema al cargar el default Layout",
             "No se ha podido cargar el layout por defecto, probablemente no este con el nombre que se ha configurado o no exista.",
             __ROOT__DIR__ . "views/template/" . $this->layout . '.php');

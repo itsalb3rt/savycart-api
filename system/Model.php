@@ -21,7 +21,7 @@ class Model
                 'database'	=> $_ENV['APP_DATABASE_NAME'],
                 'username'	=> $_ENV['APP_DATABASE_USER'],
                 'password'	=> $_ENV['APP_DATABASE_PASSWORD'],
-                'charset'	=> "utf8",
+                'charset'	=> "utf8mb4",
                 'collation'	=> "utf8mb4_unicode_ci",
                 'prefix'	=> "",
                 'port'	=> $_ENV['APP_DATABASE_PORT']
